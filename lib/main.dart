@@ -1,24 +1,29 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clon/page/login_page.dart';
+import 'package:instagram_clon/page/main_page.dart';
+import 'manager/fb.manager.dart';
+import 'page/login_page.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
+  final _manager = FbManager();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.black, brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: _manager.getUser() == null ? LoginPage() : MainPage(),
     );
   }
 }

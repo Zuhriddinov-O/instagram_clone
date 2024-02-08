@@ -6,6 +6,9 @@ import 'package:instagram_clon/page/main_page.dart';
 import 'package:instagram_clon/page/register_page.dart';
 import 'package:instagram_clon/util/navigator.dart';
 
+import '../manager/fb.manager.dart';
+import '../util/messages.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -14,6 +17,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  bool _isLoading = false;
+  final _manager = FbManager();
+
+  void _login() {
+    setState(() {
+      _isLoading = true;
+    });
+    _manager.login(_email.text, _password.text).then((value) {
+      setState(() {
+        _isLoading = true;
+      });
+      if (value) {
+        showSuccess(context, "Success");
+        navigateAndRemove(context, MainPage());
+      } else {
+        showError(context, "User not found");
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,16 +107,25 @@ class _LoginPageState extends State<LoginPage> {
                 Gap(20),
                 SizedBox(
                   width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(CupertinoPageRoute(builder: (context) => MainPage(),));
-                    },
-                    color: Colors.blue,
-                  ),
+                  child: _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CupertinoButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            if (_email.text.isNotEmpty &&
+                                _password.text.isNotEmpty) {
+                              _login();
+                            } else {
+                              showError(context, "Enter Data");
+                            }
+                          },
+                          color: Colors.blue,
+                        ),
                 ),
                 CupertinoButton(
                   child: Text("Don't have an Account? Register"),
