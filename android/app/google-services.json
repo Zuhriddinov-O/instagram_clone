@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "521129676947",
+    "project_id": "instaqlone-4debe",
+    "storage_bucket": "instaqlone-4debe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521129676947:android:85bb464f06c661b3423d66",
+        "android_client_info": {
+          "package_name": "com.example.instagram_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3nKVUHqEl0Dhy7TC5JVVhBe-GEXlHVho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
